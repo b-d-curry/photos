@@ -1,5 +1,7 @@
+""" Iterate over all the files in a directory structure looking for probable video files.
+Symbolic links are created in the destdir back to the original source. 
+""" 
 import os, time, shutil
-
 
 topdir = '/volume1/media/Pictures/'
 destdir = '/volume1/media/Pictures/'
