@@ -1,4 +1,6 @@
-""" Iterate over the files in "To Be Sorted" and 
+""" Iterate over the files in topdir and re-locate them to 
+destdir attempting to organise them by timestamp from filesystem.
+TODO: Access image/video metadata to query timestamp information.
 """
 import os, time, shutil
 
