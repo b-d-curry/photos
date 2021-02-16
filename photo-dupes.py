@@ -41,6 +41,10 @@ def check_for_duplicates(paths, hash=hashlib.sha1):
             # get all files that have the same size - they are the collision candidates
             if '@eaDir' in dirpath:
                 continue
+            if '091010' in dirpath:
+                continue
+            if 'Videos' in dirpath:
+                continue
             for filename in filenames:
                 if 'Desktop.ini' in filename:
                     continue
