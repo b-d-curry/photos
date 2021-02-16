@@ -3,9 +3,13 @@ destdir attempting to organise them by timestamp from filesystem.
 TODO: Access image/video metadata to query timestamp information.
 """
 import os, time, shutil
+import datetime
+import exiftool
 
 topdir = '/volume1/media/Pictures/To Be Sorted/'
 destdir = '/volume1/media/Pictures/Sorted'
+
+EXIF_TS_FORMAT = "%Y:%m:%d %H:%M:%S"
 
 for dirpath, dirnames, files in os.walk(topdir):
     for name in files:
@@ -18,9 +22,18 @@ for dirpath, dirnames, files in os.walk(topdir):
         filename       = os.path.join(dirpath, name)
         (basename,ext) = os.path.splitext(name)
         # Calculate the timestamp, we'll use the older of creation vs modified
+        with exiftool.ExifTool() as et:
+            metadata = et.get_metadata(filename)
+        try:
+            mctime    = metadata["EXIF:DateTimeOriginal"]
+            mctime2   = datetime.datetime.strptime(mctime, EXIF_TS_FORMAT)
+            mctime    = mctime2.timestamp()
+        except KeyError:
+            mctime = datetime.datetime.now().timestamp()
         fctime    = os.path.getctime(filename)
         fmtime    = os.path.getmtime(filename)
         ftime     = fctime if fctime < fmtime else fmtime
+        ftime     = ftime if ftime < mctime else mctime
         timestamp = time.ctime(ftime)
         # Get the filesize to calculate duplicates
         fsize     = os.path.getsize(filename)
