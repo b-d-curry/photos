@@ -7,4 +7,5 @@ Scripts to organise our photos on the bloodybox
   * Python wrapper around exiftool available from: https://github.com/smarnach/pyexiftool
 * photo-merge.py - takes the photos organised by photo-org and merges them back into the main folder structure
 * photo-dupes.py - used to find duplicates for removal
+* photo-check.py - relocates files based on their filename (assuming it corresponds to a timestamp)
 * video-link.py - creates symbolic links back to the original videos
